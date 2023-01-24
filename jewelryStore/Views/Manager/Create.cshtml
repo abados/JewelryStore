@@ -1,0 +1,107 @@
+﻿@model jewelryStore.ViewModels.VMCreateGroup
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>יצירת קבוצה חדשה</h1>
+
+<h4>בהצלחה</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ParentID" class="control-label"></label>
+                <select asp-for="ParentID" class="form-control" >
+                    @if(Model.Groups.Count>0)
+                    {
+                        @foreach (Group group in Model.Groups)
+                        {
+                            if(group.ID==Model.ParentID)
+                            {
+                                <option value="@group.ID" selected>@group.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@group.ID">@group.Name</option>
+                            }
+
+                        }
+                    }
+                </select>
+                <span asp-validation-for="ParentID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Group.Name" class="control-label"></label>
+                <input asp-for="Group.Name" class="form-control" />
+                <span asp-validation-for="Group.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Group.Description" class="control-label"></label>
+                <input asp-for="Group.Description" class="form-control" />
+                <span asp-validation-for="Group.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupFile" class="control-label"></label>
+                <input asp-for="GroupFile" class="form-control" />
+                <span asp-validation-for="GroupFile" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button id="addItemButton" onclick="toggleInputFields()" class="btn btn-secondary">add Item</button>
+            </div>
+
+            <div id="itemFieldsDiv" style="display: none;">
+                 <div class="form-group">
+        <label asp-for="Item.Name" class="control-label"></label>
+                    <input asp-for="Item.Name" class="form-control" placeholder="Item Name" />
+                    <span asp-validation-for="Item.Name" class="text-danger"></span>
+                </div>
+             <div class="form-group">
+        <label asp-for="Price.MyPrice" class="control-label"></label>
+                    <input asp-for="Price.MyPrice" class="form-control" placeholder="Item Price" />
+                    <span asp-validation-for="Price.MyPrice" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                <label asp-for="Price.EndDate" class="control-label"></label>
+                <input asp-for="Price.EndDate" class="form-control" placeholder="Item Price" />
+                <span asp-validation-for="Price.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Price.EndTime" class="control-label"></label>
+            <input asp-for="Price.EndTime" class="form-control" placeholder="Item Price" />
+            <span asp-validation-for="Price.EndTime" class="text-danger"></span>
+            </div>
+    <div class="form-group">
+        <label asp-for="Item.Description" class="control-label"></label>
+                    <input asp-for="Item.Description" class="form-control" placeholder="Item Description" />
+                    <span asp-validation-for="Item.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+                <label asp-for="ItemFile" class="control-label"></label>
+                    <input asp-for="ItemFile" class="form-control" />
+                <span asp-validation-for="ItemFile" class="text-danger"></span>
+            </div>
+
+        </div>
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+           
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
